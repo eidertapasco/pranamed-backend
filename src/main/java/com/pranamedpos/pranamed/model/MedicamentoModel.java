@@ -1,5 +1,6 @@
 package com.pranamedpos.pranamed.model;
 
+import com.pranamedpos.pranamed.enums.TipoMedicamento;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,12 +30,15 @@ public class MedicamentoModel {
 
     private String descripcion;
 
-    private String etiqueta; //enums
+    // Para poder filtrar reportes (Ej: Ver solo "SUPLEMENTOS" o "HOMEOPATICOS")
+    private String categoria; //enums
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String tipo; //enums
+    private TipoMedicamento tipo;
 
-    private String presentacion; //enums
+    @Column(nullable = true)
+    private String medida;
 
     @Column(nullable = false)
     private LocalDate fechaVencimiento;
