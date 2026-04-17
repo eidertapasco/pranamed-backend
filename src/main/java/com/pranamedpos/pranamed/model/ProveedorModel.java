@@ -1,15 +1,15 @@
 package com.pranamedpos.pranamed.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
 @Entity
+@Table(name = "proveedores")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "proveedores")
+@Builder // Patrón de diseño mas limpio
 public class ProveedorModel {
 
     @Id
@@ -21,10 +21,24 @@ public class ProveedorModel {
     @Column(nullable = false)
     private String personaContacto;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String telefonoContacto;
 
     private String emailContacto;
 
     private String direccionContacto;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if(!(o instanceof ProveedorModel that)) return false;
+
+        return telefonoContacto != null && telefonoContacto.equals(that.getTelefonoContacto());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

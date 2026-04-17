@@ -1,17 +1,17 @@
 package com.pranamedpos.pranamed.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
 @Entity
+@Table(name = "lote")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "lote")
+@Builder // Patrón de diseño mas limpio
 public class LoteModel {
 
     @Id
@@ -26,9 +26,23 @@ public class LoteModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_medicamento", nullable = false)
-    private MedicamentoModel idMedicamento;
+    private MedicamentoModel medicamento;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_medicamento", nullable = false)
-    private DetalleCompraModel idDetalleCompra;
+    @JoinColumn(name = "id_detalle_compra", nullable = false)
+    private DetalleCompraModel detalleCompra;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof LoteModel that)) return false;
+
+        return idLote != null && idLote.equals(that.getIdLote());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

@@ -2,18 +2,17 @@ package com.pranamedpos.pranamed.model;
 
 import com.pranamedpos.pranamed.enums.TipoMedicamento;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
-@Data
 @Entity
+@Table(name = "medicamentos")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "medicamentos")
+@Builder // Patrón de diseño mas limpio
 public class MedicamentoModel {
 
     @Id
@@ -47,4 +46,15 @@ public class MedicamentoModel {
     @Column(nullable = false)
     private BigDecimal precioVenta;
 
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof MedicamentoModel that)) return false;
+
+        return sku != null && sku.equals(that.getSku());
+    }
+
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
