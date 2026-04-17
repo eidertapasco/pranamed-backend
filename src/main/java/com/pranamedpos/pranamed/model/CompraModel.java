@@ -1,23 +1,26 @@
 package com.pranamedpos.pranamed.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
 @Entity
+@Table(name = "compras_proveedores")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "compras_proveedores")
+@Builder // Patrón de diseño mas limpio
 public class CompraModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCompra;
+
+    @Column(nullable = false, unique = true)
+    private String numeroFactura;
 
     @Column(nullable = false)
     private LocalDateTime fecha;
@@ -33,4 +36,17 @@ public class CompraModel {
     @JoinColumn(name = "id_usuario", nullable = false)
     private UsuarioModel usuario;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (! (o instanceof CompraModel that)) return false;
+
+        return numeroFactura != null && numeroFactura.equals(that.getNumeroFactura());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

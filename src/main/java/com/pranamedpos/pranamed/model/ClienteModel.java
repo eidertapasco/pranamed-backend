@@ -1,16 +1,15 @@
 package com.pranamedpos.pranamed.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
 @Entity
+@Table(name = "clientes")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "clientes")
+@Builder // Patrón de diseño mas limpio
 public class ClienteModel {
 
     @Id
@@ -25,8 +24,23 @@ public class ClienteModel {
     @Column(nullable = false, unique = true)
     private String documento;
 
+    @Column(unique = true)
     private String telefono;
 
     @Column(unique = true)
     private String email;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (!(o instanceof ClienteModel that)) return false;
+
+        return documento != null && documento.equals(that.getDocumento());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

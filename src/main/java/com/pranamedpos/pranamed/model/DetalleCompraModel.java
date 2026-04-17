@@ -1,17 +1,17 @@
 package com.pranamedpos.pranamed.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
-@Data
 @Entity
+@Table(name = "detalle_compras_proveedores")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "detalle_compras_proveedores")
+@Builder // Patrón de diseño mas limpio
 public class DetalleCompraModel {
 
     @Id
@@ -29,9 +29,24 @@ public class DetalleCompraModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_compra", nullable = false)
-    private CompraModel idCompra;
+    private CompraModel compra;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_medicamento", nullable = false)
-    private MedicamentoModel idMedicamento;
+    private MedicamentoModel medicamento;
+    
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) return true;
+
+        if (!(o instanceof DetalleCompraModel that)) return false;
+
+        return idDetalleCompra != null && idDetalleCompra.equals(that.getIdDetalleCompra());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
