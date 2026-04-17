@@ -11,12 +11,12 @@ import java.math.BigDecimal;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "detalle_pedidos")
-public class DetallePedidoModel {
+@Table(name = "detalle_compras_proveedores")
+public class DetalleCompraModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idDetallePedido;
+    private Long idDetalleCompra;
 
     @Column(nullable = false)
     private int cantidad;
@@ -28,8 +28,8 @@ public class DetallePedidoModel {
     private BigDecimal subtotal;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_pedido", nullable = false)
-    private PedidoModel idPedido;
+    @JoinColumn(name = "id_compra", nullable = false)
+    private CompraModel idCompra;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_medicamento", nullable = false)
