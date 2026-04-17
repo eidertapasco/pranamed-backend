@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "pedidos")
-public class PedidoModel {
+@Table(name = "compras_proveedores")
+public class CompraModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPedido;
+    private Long idCompra;
 
     @Column(nullable = false)
     private LocalDateTime fecha;
@@ -28,5 +28,9 @@ public class PedidoModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_proveedor", nullable = false)
     private ProveedorModel proveedor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private UsuarioModel usuario;
 
 }

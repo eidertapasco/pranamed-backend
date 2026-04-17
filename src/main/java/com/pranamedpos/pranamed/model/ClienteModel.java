@@ -27,10 +27,6 @@ public class ClienteModel {
 
     private String telefono;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String email;
-
-    @JsonIgnore  // Nunca serializar la contraseña en respuestas JSON
-    @Column(nullable = false)
-    private String password;
 }
